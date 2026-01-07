@@ -1,4 +1,4 @@
-npm install axios chart.js react-chartjs-2 react-tagcloud bootstrap
+npm install axios chart.js react-chartjs-2 react-tagcloud tailwindcss
 
 npm init -y
 npm install express mongoose cors dotenv multer pdf-parse 
