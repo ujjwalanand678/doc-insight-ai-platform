@@ -1,35 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import FileUpload from './components/FileUpload';
+import Dashboard from './components/Dashboard';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [result, setResult] = useState(null);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+      <nav className="bg-white shadow-sm py-4 mb-10">
+        <div className="max-w-5xl mx-auto px-4">
+          <h1 className="text-2xl font-black text-indigo-600 tracking-tighter">DOCUMIND<span className="text-slate-400">.AI</span></h1>
+        </div>
+      </nav>
+
+      <main className="max-w-5xl mx-auto px-4 pb-20">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-extrabold mb-3">Extract Insights Instantly</h2>
+          <p className="text-slate-500 text-lg">Upload any document and let Gemini 1.5 handle the heavy lifting.</p>
+        </div>
+
+        <div className="flex justify-center">
+          <div className="w-full max-w-2xl">
+            <FileUpload onUploadSuccess={(data) => setResult(data)} />
+          </div>
+        </div>
+
+        {result && <Dashboard data={result} />}
+      </main>
+    </div>
+  );
 }
 
-export default App
+export default App;
