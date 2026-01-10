@@ -1,6 +1,8 @@
 npm install axios chart.js react-chartjs-2 react-tagcloud tailwindcss
-
+npm i react-router-dom
 
 npm init -y
 npm install express mongoose cors dotenv multer pdf-parse 
 npm install @google/generative-ai
+npm install pdfkit
+npm i zustand

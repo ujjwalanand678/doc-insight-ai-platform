@@ -1,6 +1,7 @@
 import Document from '../model/Document.model.js';
 import model from '../config/genAI.js';
 import extractTextFromFile from '../utils/extractText.js';
+import PDFDocument from 'pdfkit';
 
 export const extractTextOnly = async (req, res) => {
   try {
@@ -87,5 +88,30 @@ export const getDocuments = async (req, res) => {
       message: 'Failed to fetch documents',
       error: error.message
     });
+  }
+};
+
+
+export const exportEditedPDF = async (req, res) => {
+  try {
+    const { text, filename } = req.body;
+
+    const doc = new PDFDocument({ margin: 40 });
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader(
+      'Content-Disposition',
+      `attachment; filename="${filename || 'edited-document'}.pdf"`
+    );
+
+    doc.pipe(res);
+
+    doc.fontSize(12).text(text, {
+      align: 'left',
+      lineGap: 4,
+    });
+
+    doc.end();
+  } catch (e) {
+    res.status(500).json({ message: 'PDF generation failed' });
   }
 };
