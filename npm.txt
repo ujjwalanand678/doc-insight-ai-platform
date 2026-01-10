@@ -9,3 +9,5 @@ npm i zustand
 npm install react-hot-toast
 npm i @heroicons/react
 npm install react-icons
+
+npm install react-pdf pdf-lib file-saver

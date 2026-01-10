@@ -11,6 +11,7 @@ import {
   Tooltip,
   Legend
 } from 'chart.js';
+import PdfEditor from './PdfEditor';
 
 ChartJS.register(
   CategoryScale,
@@ -64,6 +65,7 @@ const Dashboard = ({ data }) => {
           </div>
         </div>
       </div>
+      {/* <PdfEditor extractedText={analysis.rawText} /> */}
     </div>
   );
 };
