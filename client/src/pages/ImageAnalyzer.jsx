@@ -1,32 +1,86 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../lib/api';
+import LoadingButton from '../components/LoadingButton';
 
 const ImageAnalyzer = () => {
   const [file, setFile] = useState(null);
   const [result, setResult] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const analyze = async () => {
-    const formData = new FormData();
-    formData.append('image', file);
-    const res = await axios.post('/api/image/analyze', formData);
-    setResult(res.data.analysis);
+    if (!file) {
+      alert('Please select an image');
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+    setResult('');
+
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const res = await api.post(
+        '/api/image/analyze',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+
+      setResult(res.data.analysis);
+    } catch (err) {
+      console.error(err);
+      setError(
+        err?.response?.data?.message ||
+        'Image analysis failed. Please try again.'
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div>
-      <h2 className="text-3xl font-bold mb-4">Image Analyzer</h2>
-      <input type="file" accept="image/*" onChange={(e) => setFile(e.target.files[0])} />
-      <button
-        onClick={analyze}
-        className="ml-4 bg-indigo-600 text-white px-4 py-2 rounded"
-      >
-        Analyze
-      </button>
+    <div className="max-w-xl space-y-4">
+      {/* File input */}
+      <input
+        type="file"
+        accept="image/*"
+        onChange={(e) => setFile(e.target.files[0])}
+        className="block w-full border rounded p-2"
+      />
 
+      {file && (
+        <p className="text-sm text-gray-500">
+          Selected: {file.name}
+        </p>
+      )}
+
+      {/* Action */}
+      <LoadingButton
+        loading={loading}
+        loadingText="Analyzing image..."
+        onClick={analyze}
+        disabled={loading}
+      >
+        Analyze Image
+      </LoadingButton>
+
+      {/* Error */}
+      {error && (
+        <div className="text-red-600 bg-red-50 border border-red-200 p-3 rounded">
+          {error}
+        </div>
+      )}
+
+      {/* Result */}
       {result && (
-        <div className="mt-6 bg-white border rounded p-4">
-          <h4 className="font-semibold mb-2">Analysis</h4>
-          <p>{result}</p>
+        <div className="mt-4 p-4 bg-gray-100 dark:bg-gray-800 rounded whitespace-pre-wrap">
+          {result}
         </div>
       )}
     </div>

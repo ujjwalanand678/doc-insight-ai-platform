@@ -6,3 +6,6 @@ npm install express mongoose cors dotenv multer pdf-parse
 npm install @google/generative-ai
 npm install pdfkit
 npm i zustand
+npm install react-hot-toast
+npm i @heroicons/react
+npm install react-icons

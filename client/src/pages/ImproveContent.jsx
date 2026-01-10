@@ -1,49 +1,78 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../lib/api';
+import LoadingButton from '../components/LoadingButton';
 
 const ImproveContent = () => {
   const [text, setText] = useState('');
   const [result, setResult] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const improve = async () => {
+    if (!text.trim()) {
+      alert('Please enter text to improve');
+      return;
+    }
+
     setLoading(true);
+    setError(null);
+    setResult('');
+
     try {
-      const res = await axios.post('/api/ai/improve', {
+      const res = await api.post('/api/ai/improve', {
         text,
         mode: 'ats',
-        role: 'MERN Stack Developer'
       });
-      setResult(res.data.result.improvedText);
-    } catch {
-      alert('Improve failed');
+
+      const improved =
+        res?.data?.result?.improvedText ||
+        res?.data?.improvedText ||
+        '';
+
+      setResult(improved);
+    } catch (err) {
+      console.error(err);
+      setError(
+        err?.response?.data?.message ||
+        'Failed to improve content. Please try again.'
+      );
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div>
-      <h2 className="text-3xl font-bold mb-4">Improve Content with AI</h2>
+    <div className="max-w-2xl space-y-4">
+      {/* Input */}
       <textarea
-        className="w-full border rounded p-3 mb-4"
+        className="w-full border rounded p-3"
         rows={6}
-        placeholder="Paste resume bullet or summary..."
         value={text}
         onChange={(e) => setText(e.target.value)}
+        placeholder="Paste your resume content or text here..."
       />
-      <button
+
+      {/* Action */}
+      <LoadingButton
+        loading={loading}
+        loadingText="Improving..."
         onClick={improve}
         disabled={loading}
-        className="bg-indigo-600 text-white px-4 py-2 rounded"
       >
-        {loading ? 'Improving...' : 'Improve'}
-      </button>
+        Improve
+      </LoadingButton>
 
+      {/* Error */}
+      {error && (
+        <div className="text-red-600 bg-red-50 border border-red-200 p-3 rounded">
+          {error}
+        </div>
+      )}
+
+      {/* Result */}
       {result && (
-        <div className="mt-6 bg-white border rounded p-4">
-          <h4 className="font-semibold mb-2">Improved Version</h4>
-          <p>{result}</p>
+        <div className="mt-4 p-4 bg-gray-100 dark:bg-gray-800 rounded whitespace-pre-wrap">
+          {result}
         </div>
       )}
     </div>
