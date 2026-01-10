@@ -1,32 +1,33 @@
-import { Routes, Route } from 'react-router-dom';
-import ToolLayout from './layouts/ToolLayout';
-
-import Home from './pages/Home';
-import DocumentAnalyzer from './pages/DocumentAnalyzer';
-import ATSChecker from './pages/ATSChecker';
-import ImproveContent from './pages/ImproveContent';
-import AIChat from './pages/AIChat';
-import ImageAnalyzer from './pages/ImageAnalyzer';
-// import NotFound from './pages/NotFound';
+import React, { useState } from 'react';
+import FileUpload from './components/FileUpload';
+import Dashboard from './components/Dashboard';
 
 function App() {
+  const [result, setResult] = useState(null);
+
   return (
-    <Routes>
-      <Route element={<ToolLayout />}>
-        {/* Home */}
-        <Route index element={<Home />} />
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+      <nav className="bg-white shadow-sm py-4 mb-10">
+        <div className="max-w-5xl mx-auto px-4">
+          <h1 className="text-2xl font-black text-indigo-600 tracking-tighter">DOCUMIND<span className="text-slate-400">.AI</span></h1>
+        </div>
+      </nav>
 
-        {/* Tools */}
-        <Route path="analyze" element={<DocumentAnalyzer />} />
-        <Route path="ats" element={<ATSChecker />} />
-        <Route path="improve" element={<ImproveContent />} />
-        <Route path="chat" element={<AIChat />} />
-        <Route path="image" element={<ImageAnalyzer />} />
+      <main className="max-w-5xl mx-auto px-4 pb-20">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-extrabold mb-3">Extract Insights Instantly</h2>
+          <p className="text-slate-500 text-lg">Upload any document and let Gemini 1.5 handle the heavy lifting.</p>
+        </div>
 
-        {/* 404 */}
-        {/* <Route path="*" element={<NotFound />} /> */}
-      </Route>
-    </Routes>
+        <div className="flex justify-center">
+          <div className="w-full max-w-2xl">
+            <FileUpload onUploadSuccess={(data) => setResult(data)} />
+          </div>
+        </div>
+
+        {result && <Dashboard data={result} />}
+      </main>
+    </div>
   );
 }
 
