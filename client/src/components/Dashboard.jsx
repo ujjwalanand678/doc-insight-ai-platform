@@ -50,20 +50,20 @@ const Dashboard = ({ data }) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Sentiment Chart */}
-        <div className="bg-white p-6 rounded-xl shadow-md border border-slate-100">
+        {/* <div className="bg-white p-6 rounded-xl shadow-md border border-slate-100">
           <h3 className="text-slate-800 font-bold mb-4 text-center">Document Sentiment</h3>
           <div className="h-48 flex items-center justify-center">
             <Bar data={chartData} options={{ maintainAspectRatio: false, indexAxis: 'y' }} />
           </div>
-        </div>
+        </div> */}
 
         {/* Word Cloud */}
-        <div className="bg-white p-6 rounded-xl shadow-md border border-slate-100">
+        {/* <div className="bg-white p-6 rounded-xl shadow-md border border-slate-100">
           <h3 className="text-slate-800 font-bold mb-4 text-center">Key Themes</h3>
           <div className="flex justify-center p-4">
             <TagCloud minSize={14} maxSize={38} tags={analysis.keywords} />
           </div>
-        </div>
+        </div> */}
       </div>
       {/* <PdfEditor extractedText={analysis.rawText} /> */}
     </div>
