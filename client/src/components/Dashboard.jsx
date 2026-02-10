@@ -48,7 +48,7 @@ const Dashboard = ({ data }) => {
         <p className="text-slate-700 leading-relaxed text-lg italic">"{analysis.summary}"</p>
       </section>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-8"> */}
         {/* Sentiment Chart */}
         {/* <div className="bg-white p-6 rounded-xl shadow-md border border-slate-100">
           <h3 className="text-slate-800 font-bold mb-4 text-center">Document Sentiment</h3>
@@ -64,7 +64,7 @@ const Dashboard = ({ data }) => {
             <TagCloud minSize={14} maxSize={38} tags={analysis.keywords} />
           </div>
         </div> */}
-      </div>
+      {/* </div> */}
       {/* <PdfEditor extractedText={analysis.rawText} /> */}
     </div>
   );
