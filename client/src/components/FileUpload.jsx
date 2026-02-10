@@ -18,7 +18,7 @@ const FileUpload = ({ onUploadSuccess }) => {
 
     try {
       const res = await axios.post(
-        'http://localhost:3000/api/upload',
+        'https://doc-insight-ai-platform.onrender.com/api/upload',
         formData,
         {
           headers: { 'Content-Type': 'multipart/form-data' },
